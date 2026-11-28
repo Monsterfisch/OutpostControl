@@ -1,131 +1,38 @@
 defenders_group: Outpost defenders
-defenders_group_descr: |
-  Pick which troops guard an outpost and how many, in the outpost's own panel in the map editor.
-defenders_enabled: Choose the defenders
-defenders_enabled_tooltip: |
-  Adds a Defenders page to the outpost panel. Click the button at the top of the panel to switch
-  between the Attackers page (the game's own) and the Defenders page. On the Defenders page the
-  eight troop buttons pick the guards (pick several and they take turns), and the Amount slider
-  sets how many stand around the outpost, from none to 50. Fallen guards come back one at a time,
-  quicker the more you set, so a full set comes back in about the time the game's 8 do. With no
-  troop picked the outpost uses archers, as the game does. Melee guards stand in the defensive
-  stance, slaves in the aggressive one, knights are aggressive and patrol like horse archers, and horse archers are aggressive and patrol round the
-  outpost through six random spots, each moved to a free place when something is in the way.
+defenders_enabled: Add an outpost Defenders page
+defenders_enabled_tooltip: Select an outpost in the map editor, click Defenders at the top of the panel, then choose types and set the count.
+defenders_walls: Outpost guards man nearby walls and towers
+defenders_walls_tooltip: Outpost defenders can take positions on nearby walls and towers.
+defenders_knights: Knight guards attack during patrols
+defenders_knights_tooltip: Outpost knight guards can engage enemies during their patrols.
+waves_group: Outpost wave settings
+waves_group_descr: 'How many troops each wave of an outpost has.
 
-defenders_walls: Guards man nearby walls and towers
-defenders_walls_tooltip: |
-  A new guard on foot goes up onto the outpost owner's walls, stone towers or stone gatehouses
-  within 16 tiles of the outpost, if it can walk there: to the free spot with the fewest guards
-  round it, so they spread out over the walls and fill the places of guards who fell. Knights
-  and horse archers stay on the ground. Works for every outpost, also those without settings.
-defenders_knights: Patrolling knights attack nearby buildings
-defenders_knights_tooltip: |
-  Knight guards ride a patrol round their outpost in the aggressive stance, like horse archers,
-  and fight the enemy troops they meet. With this on they also attack enemy buildings that come
-  within 10 tiles of them, and ride their patrol again once the building is down.
-
-waves_group: Wave size
-waves_group_descr: |
-  How many troops each wave of an outpost has.
-waves_exact: Set the exact number of troops per wave
-waves_exact_tooltip: |
-  The Size slider on the outpost panel's Attackers page sets exactly how many troops each wave
-  has, instead of the game's 6 steps of random group sizes. It goes from 0, which switches the
-  outpost's waves off, to the most the game itself ever sends at its biggest size. Without the
-  module the map keeps the nearest of the game's own sizes.
+  '
+waves_exact: Exact wave size
+waves_exact_tooltip: On the outpost’s Attackers page, set Size to the number of troops per wave or 0 to stop waves.
 growth_group: Wave growth
-growth_group_descr: |
-  How much bigger an outpost's waves get over the game.
-growth_enabled: Choose how much the waves grow
-growth_enabled_tooltip: |
-  The Growth slider on the outpost panel's Attackers page, under Size and Start Delay: how much
-  bigger each wave is than the one before, in percent of the first wave. 0 keeps every wave as
-  big as the first, as the game does; 50 adds half the first wave each time; 100 adds a whole
-  first wave each time (the 3rd wave is three times the first). Waves stop growing at 999
-  troops, and the game still sends no more than the army limit allows. How fast the waves come
-  stays as in the game: a little sooner after every wave.
-jobs_group: Attackers' jobs
-jobs_group_descr: |
-  When a wave leaves an outpost, its troops split up by type and each part gets a job that suits
-  it. The numbers below say how many of each type take the first job; the rest take the second.
-  Catapults and fire ballistas have their own setting below.
-jobs_enabled: Give the attackers jobs
-jobs_enabled_tooltip: |
-  Without this, a whole wave does one thing: walk up and attack a building, now and then digging
-  at the moat. With it, the wave splits into troops that fill the moat, hack at walls and gates,
-  burn and wreck buildings, shoot the troops they meet, ride round the castle or hunt the lord.
-  A troop with nothing left to do for its job (moat filled, no wall in the way) attacks the way
-  the whole wave would have.
-jobs_slaves: Slaves filling the moat (%)
-jobs_slaves_tooltip: |
-  The rest burn and wreck buildings.
-jobs_spearmen: Spearmen filling the moat (%)
-jobs_spearmen_tooltip: |
-  The rest hack at walls and gates.
-jobs_macemen: Macemen filling the moat (%)
-jobs_macemen_tooltip: |
-  The rest wreck buildings.
-jobs_swordsmen: Swordsmen attacking walls and gates (%)
-jobs_swordsmen_tooltip: |
-  The rest wreck buildings.
-jobs_arab_swordsmen: Arabian swordsmen attacking walls and gates (%)
-jobs_arab_swordsmen_tooltip: |
-  The rest wreck buildings.
-jobs_knights: Knights hunting the lord (%)
-jobs_knights_tooltip: |
-  The rest ride round the castle and cut down whoever is outside the walls. When the lord cannot be reached, the hunters ride round the castle too.
-jobs_archers: Archers filling the moat (%)
-jobs_archers_tooltip: |
-  The rest walk up and shoot the troops they meet.
-jobs_arab_archers: Arabian archers filling the moat (%)
-jobs_arab_archers_tooltip: |
-  The rest walk up and shoot the troops they meet.
-jobs_slingers: Slingers riding round the castle (%)
-jobs_slingers_tooltip: |
-  They walk round the castle and shoot whoever is outside the walls. The rest walk up and shoot the troops they meet.
-jobs_horse_archers: Horse archers riding round the castle (%)
-jobs_horse_archers_tooltip: |
-  They ride round the castle and shoot whoever is outside the walls. The rest walk up and shoot the troops they meet.
-jobs_fire_throwers: Fire throwers burning buildings (%)
-jobs_fire_throwers_tooltip: |
-  The rest walk up and burn the troops they meet.
+growth_group_descr: 'How much bigger an outpost''s waves get over the game.
 
-siege_group: Siege engines on the way
-siege_group_descr: |
-  Catapults and fire ballistas from an outpost shoot at what they pass, like the AI's raiding
-  siege engines.
-siege_enabled: Shoot targets on the way
-siege_enabled_tooltip: |
-  Catapults and fire ballistas from an outpost walk towards the castle they attack and stop to
-  shoot as soon as an enemy building (for fire ballistas: enemy troops first) is in range. The
-  game itself decides what is in range, with each engine's own range, as for a player's engine.
-  Only enemies are aimed at: players on another team than the outpost's owner, never its allies.
-
-retarget_group: Next opponent
-retarget_group_descr: |
-  What an outpost's troops do once the player they attack is beaten.
-retarget_enabled: Go for the next opponent
-retarget_enabled_tooltip: |
-  Each troop an outpost sends out goes for one enemy player. Once that player's lord is dead,
-  the troop picks the next opponent the way the game picks the first one - the nearest enemy
-  whose lord still lives - instead of standing about. Siege engines already shoot any enemy in
-  their range.
-
-join_group: Outposts reinforce the AI
-join_group_descr: |
-  Waves from an AI's outposts join that AI's own attack army instead of attacking on their own.
-join_enabled: Send outpost waves to the AI's attack army
-join_enabled_tooltip: |
-  When a wave leaves an outpost of an AI player, its troops join that AI's attack army, each in
-  the troop the game itself would use for it: archers, crossbowmen, slingers, horse archers and
-  fire throwers the backup troops, everyone else the main army. They then wait for the AI's next
-  attack and fight in it, and count towards the army the AI waits for before it attacks. Siege
-  engines stay with the outpost and shoot what they can reach. A unit whose troop the AI does not
-  have yet keeps attacking from the outpost.
-
-diagnostics_group: Diagnostics
-diagnostics_group_descr: |
-  For testing.
-diagnostics_log: Write what the waves do to the log
-diagnostics_log_tooltip: |
-  Writes a line to ucp3.log whenever a wave leaves an outpost and splits into jobs.
+  '
+growth_enabled: Wave growth
+growth_enabled_tooltip: On the outpost’s Attackers page, set Growth to add troops to later waves or 0 to keep the same size.
+jobs_group: Outpost waves
+jobs_enabled: Give outpost waves separate jobs
+jobs_enabled_tooltip: Troops split into groups by role while they remain under outpost control.
+siege_enabled: Outpost siege engines fire on the way
+siege_enabled_tooltip: Outpost siege engines can stop to fire at targets along their route.
+retarget_enabled: Outpost waves attack the next opponent
+retarget_enabled_tooltip: Surviving outpost troops can move on to another enemy when their opponent is defeated.
+join_enabled: Add outpost waves to the AI’s army
+join_enabled_tooltip: Troops that join an AI army follow its orders and leave their outpost jobs.
+improvements: Improvements
+balance_changes: Balance Changes
+ai: AI
+waves_interval: Fixed interval between waves
+waves_interval_tooltip: On the outpost’s Timing page, set Interval to a fixed delay or 0 to use game timing.
+qol: Quality of Life
+map_editor: Map editor
+cat_allies_outposts: Allies and outposts
+cat_outpost_guards: Outpost guards
+cat_outposts: Outposts

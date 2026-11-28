@@ -1,0 +1,37 @@
+meta:
+  version: 1.0.0
+config-sparse:
+  modules:
+    outpost-control:
+      config:
+        defenders:
+          enabled:
+            contents:
+              suggested-value: true
+          walls:
+            contents:
+              suggested-value: true
+          knights:
+            contents:
+              suggested-value: true
+        waves:
+          exact:
+            contents:
+              suggested-value: true
+        growth:
+          enabled:
+            contents:
+              suggested-value: true
+        jobs:
+          enabled:
+            contents:
+              suggested-value: true
+        siege:
+          enabled:
+            contents:
+              suggested-value: true
+        retarget:
+          enabled:
+            contents:
+              suggested-value: true
+  plugins: {}

@@ -2,7 +2,7 @@
 -- the scripts reach each other by address. Building entries are 16 bytes, one per building id:
 -- +0 the building's uid (the entry only counts while it matches), +4 the defender troop
 -- buttons (bit per button), +6 the number of defenders, +7 the growth in percent, +8 the exact
--- wave size (0xFFFF: not set, the game's own size slider counts).
+-- wave size (0xFFFF: game size), +10 the interval in seconds (0: game timing).
 
 local templates = {}
 
@@ -57,6 +57,7 @@ shl eax,ENTRY_SHIFT
 add eax,TABLE
 mov [eax],ebx
 mov word [eax+8],0xFFFF
+mov word [eax+10],0
 mov word [eax+4],1
 movsx ebx,byte [edx+B_DEFENDERS]
 cmp ebx,1
@@ -121,6 +122,10 @@ alive:
 movzx eax,word [edi]
 test eax,eax
 jz next_slot
+cmp eax,UNIT_CAPACITY
+jae next_slot
+cmp eax,[UNIT_COUNT]
+jae next_slot
 imul eax,eax,U_STRIDE
 mov eax,[eax+U_UID]
 cmp eax,[edi+4]
@@ -173,6 +178,10 @@ find_slot:
 movzx eax,word [esi]
 test eax,eax
 jz take
+cmp eax,UNIT_CAPACITY
+jae take
+cmp eax,[UNIT_COUNT]
+jae take
 imul eax,eax,U_STRIDE
 mov eax,[eax+U_UID]
 cmp eax,[esi+4]
@@ -498,8 +507,7 @@ ret 8
 -- Replaces makeOutpostTribesAttack's call of decideOnTribeAttackLocation(tribe). With RETARGET,
 -- a troop whose target player is beaten (his lord is dead) first gets a new one from the game's
 -- own choice (setTargetForTribeBasedOnTargetChoiceLogic: the nearest enemy whose lord lives).
--- Troops with a job "fight troops" or "attack buildings" take the game's own ranged or melee
--- choice; the others are lua's.
+-- Troops with a matching job and UID use the outpost's order callback.
 templates.decide = [[
 if RETARGET <> 0
 mov eax,[esp+4]
@@ -536,12 +544,21 @@ pop ebx
 pop ecx
 checked:
 end if
+if ORDERS <> 0
 mov eax,[esp+4]
 cmp eax,MAX_TRIBES
 jae original
 movzx edx,byte [JOBS+eax]
 test edx,edx
 jz original
+if JOBS_ON = 0
+cmp edx,JOB_SIEGE
+jne original
+end if
+if SIEGE_ON = 0
+cmp edx,JOB_SIEGE
+je original
+end if
 push ecx
 mov ecx,eax
 imul ecx,ecx,TRIBE_STRIDE
@@ -549,23 +566,12 @@ mov ecx,[ecx+TRIBE_UID]
 cmp ecx,[JOB_UIDS+eax*4]
 pop ecx
 jne original
-cmp edx,JOB_ENGAGE
-jne not_engage
-imul eax,eax,TRIBE_STRIDE
-mov word [eax+TRIBE_KIND],KIND_RANGED
-jmp original
-not_engage:
-cmp edx,JOB_BUILDINGS
-jne own
-imul eax,eax,TRIBE_STRIDE
-mov word [eax+TRIBE_KIND],KIND_MELEE
-jmp original
-own:
 mov [DECIDE_TRIBE],eax
 mov [DECIDE_THIS],ecx
 call PAD
 ret 4
 original:
+end if
 jmp DECIDE
 ]]
 
@@ -574,13 +580,49 @@ jmp DECIDE
 -- forward in the AI's siege steps (9) goes to lua, which may set it shooting. Then whatever update function the table held runs, by the unit's type.
 templates.siegeCheck = [[
 mov eax,[CURRENT_UNIT]
+if BALLISTA <> 0
+imul ecx,eax,U_STRIDE
+cmp word [ecx+U_BEHAVIOUR],OUTPOST_BEHAVIOUR
+jne go
+movzx edx,word [ecx+U_TARGETING]
+cmp edx,ATTACK_BUILDING
+je clearTarget
+cmp edx,ATTACK_WALL_AT
+jne ballistaIdle
+clearTarget:
+xor edx,edx
+mov word [ecx+U_TARGETING],dx
+mov word [ecx+U_TARGET_BUILDING],dx
+mov dword [ecx+U_TARGET_UID],edx
+mov dword [ecx+U_WALL_X],edx
+mov word [ecx+U_SHOOT_UNIT],dx
+movzx edx,word [ecx+U_ACTION]
+cmp edx,STATE_SHOOT
+je stopShooting
+cmp edx,STATE_LOAD
+je stopShooting
+cmp edx,STATE_FIRE
+jne ballistaIdle
+stopShooting:
+mov word [ecx+U_ACTION],0
+ballistaIdle:
+; A negative countdown keeps the native idle update from acquiring a building.
+cmp word [ecx+U_ACTION],0
+jne stagger
+cmp dword [ecx+IDLE_DELAY],0
+jl stagger
+mov dword [ecx+IDLE_DELAY],-1
+stagger:
+end if
 mov edx,[TICKS]
 add edx,eax
 test edx,SIEGE_EVERY
 jnz go
+if BALLISTA = 0
 imul ecx,eax,U_STRIDE
 cmp word [ecx+U_BEHAVIOUR],OUTPOST_BEHAVIOUR
 jne go
+end if
 movzx edx,word [ecx+U_ACTION]
 test edx,edx
 jz check
@@ -602,19 +644,53 @@ movsx eax,word [eax+U_TYPE]
 jmp dword [ORIGINAL_UPDATES+eax*4]
 ]]
 
--- The outpost panel's text (prologue: mov eax,[selected], 5 bytes). With growth on, the
--- attacker page gets its own labels for the moved sliders and the growth slider; the defender
--- page always has its own labels. Then the page button, when there is a defender page.
+-- UpdateOutpostBuilding's idle branch: replace the wait in ecx after the first launch.
+templates.intervalWait = [[
+cmp word [eax+B_WAVES],0
+je original
+push eax
+mov eax,[CURRENT_BUILDING]
+call ENTRY_GET
+test eax,eax
+jz saved_index
+movzx edx,word [eax+INTERVAL_FIELD]
+test edx,edx
+jz saved_index
+imul ecx,edx,TICKS_PER_SECOND
+saved_index:
+pop eax
+original:
+add word [eax+B_IDLE_TIMER],1
+jmp RESUME
+]]
+
+-- The outpost panel's text (prologue: mov eax,[selected], 5 bytes).
 templates.panel = [[
 cmp dword [MODE],0
-jne own
-if GROWTH_ON <> 0
+jne defenders
+if INTERVAL_ON <> 0
+cmp dword [SCOPE],1
+je timing
+end if
+if GROWTH_ON <> 0 | INTERVAL_ON <> 0
 call ATTACK_LABELS
+if GROWTH_ON <> 0
 call GROWTH_SLIDER
+end if
 else
 call usual
 end if
+jmp numbers
+if INTERVAL_ON <> 0
+timing:
+call TIMING_LABELS
+call INTERVAL_SLIDER
+end if
+numbers:
 call NUMBERS
+if INTERVAL_ON <> 0
+call SCOPE_TOGGLE
+end if
 if TOGGLE_ON <> 0
 jmp TOGGLE
 else
@@ -623,7 +699,7 @@ end if
 usual:
 mov eax,[SELECTED]
 jmp RESUME
-own:
+defenders:
 if TOGGLE_ON <> 0
 call DEFENDER_LABELS
 call NUMBERS
@@ -641,6 +717,10 @@ push esi
 mov esi,[SELECTED]
 cmp dword [MODE],0
 jne defenders
+if INTERVAL_ON <> 0
+cmp dword [SCOPE],1
+je delay
+end if
 if WAVES_ON <> 0
 mov eax,esi
 call WAVE_VALUE
@@ -652,6 +732,11 @@ end if
 xor ecx,ecx
 mov ebx,SIZE_ROW
 call show
+if INTERVAL_ON <> 0
+jmp growth
+delay:
+imul esi,esi,B_STRIDE
+end if
 movsx eax,word [esi+B_DELAY]
 cmp eax,0
 jge delay_ok
@@ -663,6 +748,21 @@ div ecx
 mov ecx,'s'
 mov ebx,DELAY_ROW
 call show
+if INTERVAL_ON <> 0
+mov eax,[SELECTED]
+call ENTRY_GET
+xor edx,edx
+test eax,eax
+jz interval_known
+movzx edx,word [eax+INTERVAL_FIELD]
+interval_known:
+mov eax,edx
+mov ecx,'s'
+mov ebx,INTERVAL_ROW
+call show
+jmp done
+growth:
+end if
 if GROWTH_ON <> 0
 mov eax,[SELECTED]
 call ENTRY_GET
@@ -766,10 +866,8 @@ pop ebx
 ret
 ]]
 
--- The growth slider on the attacker page (percent of the first wave added per wave), drawn by
--- the game's slider renderer. A left click on
--- it starts a drag that lasts while the button is held; the value is 0 to 100.
-templates.growthSlider = [[
+-- A slider backed by an outpost entry field, drawn by the native slider renderer.
+templates.entrySlider = [[
 push ebx
 push esi
 push edi
@@ -778,17 +876,21 @@ call ENTRY_GET
 xor edi,edi
 test eax,eax
 jz have
-movzx edi,byte [eax+7]
+if WIDE <> 0
+movzx edi,word [eax+ENTRY_FIELD]
+else
+movzx edi,byte [eax+ENTRY_FIELD]
+end if
 have:
 mov ebx,[MENU_X]
-add ebx,GROWTH_X
+add ebx,SLIDER_X
 mov esi,[MENU_Y]
-add esi,GROWTH_Y
+add esi,SLIDER_Y
 cmp dword [MOUSE+LEFT_CLICK],0
 je no_start
 mov eax,[MOUSE+MOUSE_X]
 sub eax,ebx
-cmp eax,GROWTH_W
+cmp eax,SLIDER_W
 jae no_start
 mov eax,[MOUSE+MOUSE_Y]
 sub eax,esi
@@ -806,7 +908,7 @@ je draw
 mov eax,[MOUSE+MOUSE_X]
 sub eax,ebx
 sub eax,KNOB_HALF
-imul eax,eax,100
+imul eax,eax,STEPS
 cdq
 mov ecx,KNOB_SPAN
 idiv ecx
@@ -814,10 +916,11 @@ cmp eax,0
 jge low_ok
 xor eax,eax
 low_ok:
-cmp eax,100
+cmp eax,STEPS
 jle high_ok
-mov eax,100
+mov eax,STEPS
 high_ok:
+imul eax,eax,STEP
 cmp eax,edi
 je draw
 mov edi,eax
@@ -826,7 +929,11 @@ call ENTRY_MAKE
 test eax,eax
 jz draw
 mov ecx,edi
-mov [eax+7],cl
+if WIDE <> 0
+mov [eax+ENTRY_FIELD],cx
+else
+mov [eax+ENTRY_FIELD],cl
+end if
 draw:
 push dword [BUTTON_X]
 push dword [BUTTON_X+4]
@@ -835,12 +942,12 @@ push dword [BUTTON_X+12]
 push dword [DRAW_CHOICE]
 mov [BUTTON_X],ebx
 mov [BUTTON_X+4],esi
-mov dword [BUTTON_X+8],GROWTH_W
-mov dword [BUTTON_X+12],GROWTH_H
+mov dword [BUTTON_X+8],SLIDER_W
+mov dword [BUTTON_X+12],SLIDER_H
 mov eax,edi
 imul eax,eax,KNOB_SPAN
 cdq
-mov ecx,100
+mov ecx,STEPS*STEP
 idiv ecx
 push 0
 push KNOB_W
@@ -882,7 +989,7 @@ mov ecx,1
 cmp dword [MOUSE+LEFT_CLICK],0
 je draw
 mov dword [MOUSE+LEFT_CLICK],0
-xor dword [MODE],1
+xor dword [TOGGLE_STATE],1
 push ecx
 push CLICK_SOUND
 mov ecx,SOUNDS
@@ -923,8 +1030,8 @@ lea eax,[esi+7]
 push eax
 lea eax,[ebx+TOGGLE_HALF]
 push eax
-mov eax,[MODE]
-push dword [PAGE_TEXTS+eax*4]
+mov eax,[TOGGLE_STATE]
+push dword [TOGGLE_TEXTS+eax*4]
 mov ecx,TEXT_MANAGER
 call SHADOW_TEXT
 pop dword [DRAW_CHOICE]
@@ -998,7 +1105,19 @@ cmp word [eax+B_TYPE],ARAB_OUTPOST
 jne euro
 add ecx,8
 euro:
-push dword [DEFENDER_NAMES+ecx*4]
+cmp ecx,11
+jne defenderWords
+; Use the Arabian Attacker button's shorter native Swordsmen label.
+push 11
+push 0x40
+jmp getDefenderWords
+defenderWords:
+push dword [DEFENDER_TEXTS+ecx*4]
+push UNIT_HELP_GROUP
+getDefenderWords:
+mov ecx,TEXT_MANAGER
+call GET_TEXT
+push eax
 mov ecx,TEXT_MANAGER
 call SHADOW_TEXT
 pop edi

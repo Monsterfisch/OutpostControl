@@ -1,0 +1,34 @@
+defenders_group: 前哨站守军
+defenders_enabled: 添加前哨站“守军”页面
+defenders_enabled_tooltip: 在地图编辑器中选中前哨站，点击面板顶部的“守军”，然后选择兵种并设置数量。
+defenders_walls: 前哨站守卫驻守附近城墙与塔楼
+defenders_walls_tooltip: 前哨站守军可进驻附近的城墙和塔楼。
+defenders_knights: 骑士守卫在巡逻时主动攻击
+defenders_knights_tooltip: 前哨站的骑士守卫可在巡逻途中攻击敌人。
+waves_group: 前哨站波次设置
+waves_group_descr: 前哨站每波进攻包含的兵力数量。
+waves_exact: 精确波次规模
+waves_exact_tooltip: 在前哨站的“进攻方”页面将“规模”设为每波人数，设为 0 则停止出兵。
+growth_group: 波次增长
+growth_group_descr: 前哨站的进攻波次随游戏进程递增的幅度。
+growth_enabled: 波次增长
+growth_enabled_tooltip: 在前哨站的“进攻方”页面设置“增长”以为后续波次增加兵力，设为 0 则保持规模不变。
+jobs_group: 前哨站波次
+jobs_enabled: 为前哨站波次分配不同职责
+jobs_enabled_tooltip: 在前哨站控制期间，部队按职责分为多个小组行动。
+siege_enabled: 前哨站攻城器械沿途开火
+siege_enabled_tooltip: 前哨站攻城器械可在行进途中停下射击目标。
+retarget_enabled: 前哨站波次转攻下一名对手
+retarget_enabled_tooltip: 当前对手被击败后，幸存的前哨站部队会转向另一名敌人。
+join_enabled: 将前哨站波次编入 AI 军队
+join_enabled_tooltip: 加入 AI 军队的部队会听从其指挥，并脱离前哨站职责。
+improvements: 改进
+balance_changes: 平衡调整
+ai: AI
+waves_interval: 固定波次间隔
+waves_interval_tooltip: 在前哨站的“计时”页面将“间隔”设为固定延迟，设为 0 则使用游戏默认计时。
+qol: 便利性改进
+map_editor: 地图编辑器
+cat_allies_outposts: 盟友与前哨站
+cat_outpost_guards: 前哨站守卫
+cat_outposts: 前哨站

@@ -1,0 +1,34 @@
+defenders_group: Défenseurs d'avant-poste
+defenders_enabled: Ajouter une page Défenseurs aux avant-postes
+defenders_enabled_tooltip: Sélectionnez un avant-poste dans l’éditeur de cartes, cliquez sur Défenseurs en haut du panneau, puis choisissez les types et le nombre.
+defenders_walls: Les gardes d’avant-poste garnissent les murs et tours voisins
+defenders_walls_tooltip: Les défenseurs d’avant-poste peuvent prendre position sur les murs et tours proches.
+defenders_knights: Les chevaliers gardes attaquent en patrouille
+defenders_knights_tooltip: Les chevaliers gardes d’avant-poste peuvent engager les ennemis pendant leurs patrouilles.
+waves_group: Réglages des vagues d’avant-poste
+waves_group_descr: Nombre de troupes dans chaque vague d'un avant-poste.
+waves_exact: Taille exacte des vagues
+waves_exact_tooltip: Dans la page Attaquants de l’avant-poste, réglez Taille sur le nombre de troupes par vague ou 0 pour arrêter les vagues.
+growth_group: Croissance des vagues
+growth_group_descr: De combien les vagues d'un avant-poste grossissent au fil de la partie.
+growth_enabled: Croissance des vagues
+growth_enabled_tooltip: Dans la page Attaquants de l’avant-poste, réglez Croissance pour ajouter des troupes aux vagues suivantes ou 0 pour garder la même taille.
+jobs_group: Vagues d’avant-poste
+jobs_enabled: Attribuer des rôles distincts aux vagues d’avant-poste
+jobs_enabled_tooltip: Les troupes se répartissent en groupes par rôle tant qu’elles restent sous contrôle de l’avant-poste.
+siege_enabled: Les engins de siège d’avant-poste tirent en chemin
+siege_enabled_tooltip: Les engins de siège d’avant-poste peuvent s’arrêter pour tirer sur des cibles en chemin.
+retarget_enabled: Les vagues d’avant-poste attaquent l’adversaire suivant
+retarget_enabled_tooltip: Les troupes survivantes d’un avant-poste se tournent vers un autre ennemi une fois leur adversaire vaincu.
+join_enabled: Ajouter les vagues d’avant-poste à l’armée de l’IA
+join_enabled_tooltip: Les troupes qui rejoignent une armée IA suivent ses ordres et quittent leurs tâches d’avant-poste.
+improvements: Améliorations
+balance_changes: Modifications de l'équilibrage
+ai: IA
+waves_interval: Intervalle fixe entre les vagues
+waves_interval_tooltip: Dans la page Délais de l’avant-poste, réglez Intervalle sur un délai fixe ou 0 pour utiliser le rythme du jeu.
+qol: Qualité de vie
+map_editor: Éditeur de cartes
+cat_allies_outposts: Alliés et avant-postes
+cat_outpost_guards: Gardes d'avant-poste
+cat_outposts: Avant-postes

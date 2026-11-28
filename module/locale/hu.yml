@@ -1,0 +1,34 @@
+defenders_group: Előőrs védői
+defenders_enabled: Védők lap hozzáadása az előőrsökhöz
+defenders_enabled_tooltip: Jelölj ki egy előőrsöt a térképszerkesztőben, kattints a panel tetején a Védők lapra, majd válaszd ki a típusokat és a létszámot.
+defenders_walls: Az előőrs őrei elfoglalják a közeli falakat és tornyokat
+defenders_walls_tooltip: Az előőrs védői állást foglalhatnak a közeli várfalakon és tornyokon.
+defenders_knights: A lovagőrök járőrözés közben támadnak
+defenders_knights_tooltip: Az előőrs lovagőrei járőrözés közben megtámadhatják az ellenséget.
+waves_group: Előőrs-hullámok beállításai
+waves_group_descr: Hány egységből áll egy előőrs egyes hulláma.
+waves_exact: Pontos hullámméret
+waves_exact_tooltip: Az előőrs Támadók lapján a Méret értékkel add meg a hullámonkénti létszámot, vagy 0-val állítsd le a hullámokat.
+growth_group: Hullámnövekedés
+growth_group_descr: Mennyivel lesznek nagyobbak az előőrs hullámai a játék során.
+growth_enabled: Hullámok növekedése
+growth_enabled_tooltip: Az előőrs Támadók lapján a Növekedés értékkel adhatsz hozzá katonákat a későbbi hullámokhoz, a 0 megtartja a méretet.
+jobs_group: Előőrs-hullámok
+jobs_enabled: Külön feladatok az előőrs-hullámoknak
+jobs_enabled_tooltip: A csapatok szerepkör szerint csoportokra oszlanak, amíg az előőrs irányítása alatt állnak.
+siege_enabled: Az előőrs ostromgépei útközben is lőnek
+siege_enabled_tooltip: Az előőrs ostromgépei megállhatnak útközben célpontokra lőni.
+retarget_enabled: Az előőrs-hullámok a következő ellenfelet támadják
+retarget_enabled_tooltip: A túlélő előőrs-csapatok másik ellenség ellen indulnak, ha az ellenfelüket legyőzték.
+join_enabled: Előőrs-hullámok csatolása az MI seregéhez
+join_enabled_tooltip: Az MI seregéhez csatlakozó csapatok annak parancsait követik, és elhagyják előőrsi feladataikat.
+improvements: Fejlesztések
+balance_changes: Egyensúlymódosítások
+ai: MI
+waves_interval: Fix időköz a hullámok között
+waves_interval_tooltip: Az előőrs Időzítés lapján az Időköz értékkel adj meg fix késleltetést, vagy 0-val a játék időzítését.
+qol: Kényelmi funkciók
+map_editor: Térképszerkesztő
+cat_allies_outposts: Szövetségesek és előőrsök
+cat_outpost_guards: Előőrsök őrsége
+cat_outposts: Előőrsök

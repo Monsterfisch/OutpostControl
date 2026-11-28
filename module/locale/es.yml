@@ -1,0 +1,34 @@
+defenders_group: Defensores del puesto avanzado
+defenders_enabled: Añadir página Defensores en puestos avanzados
+defenders_enabled_tooltip: Selecciona un puesto avanzado en el editor de mapas, haz clic en Defensores arriba del panel, elige tipos y fija la cantidad.
+defenders_walls: Los guardias de puestos ocupan murallas y torres cercanas
+defenders_walls_tooltip: Los defensores de los puestos avanzados pueden apostarse en murallas y torres cercanas.
+defenders_knights: Los caballeros guardianes atacan al patrullar
+defenders_knights_tooltip: Los caballeros guardianes de puestos avanzados pueden atacar a enemigos durante sus patrullas.
+waves_group: Ajustes de oleadas de puestos
+waves_group_descr: Cuántas tropas tiene cada oleada de un puesto avanzado.
+waves_exact: Tamaño exacto de oleada
+waves_exact_tooltip: En la página Atacantes del puesto, fija Tamaño en el número de tropas por oleada o 0 para detenerlas.
+growth_group: Crecimiento de oleadas
+growth_group_descr: Cuánto crecen las oleadas de un puesto avanzado a lo largo de la partida.
+growth_enabled: Crecimiento de oleadas
+growth_enabled_tooltip: En la página Atacantes del puesto, fija Crecimiento para sumar tropas a futuras oleadas o 0 para mantener el tamaño.
+jobs_group: Oleadas de puestos avanzados
+jobs_enabled: Dar tareas separadas a las oleadas de puestos
+jobs_enabled_tooltip: Las tropas se dividen en grupos por función mientras permanecen bajo control del puesto.
+siege_enabled: Las máquinas de asedio de puestos disparan en el camino
+siege_enabled_tooltip: Las máquinas de asedio de puestos pueden detenerse a disparar a objetivos en su ruta.
+retarget_enabled: Las oleadas de puestos atacan al siguiente rival
+retarget_enabled_tooltip: Las tropas supervivientes del puesto avanzan hacia otro enemigo al derrotar a su rival.
+join_enabled: Unir las oleadas de puestos al ejército de la IA
+join_enabled_tooltip: Las tropas que se unen a un ejército de la IA siguen sus órdenes y dejan sus tareas del puesto.
+improvements: Mejoras
+balance_changes: Cambios de equilibrio
+ai: IA
+waves_interval: Intervalo fijo entre oleadas
+waves_interval_tooltip: En la página Tiempos del puesto, fija Intervalo en una pausa fija o 0 para usar el ritmo del juego.
+qol: Comodidad de juego
+map_editor: Editor de mapas
+cat_allies_outposts: Aliados y puestos avanzados
+cat_outpost_guards: Guardias del puesto avanzado
+cat_outposts: Puestos avanzados

@@ -1,0 +1,34 @@
+defenders_group: Karakol savunucuları
+defenders_enabled: Karakollara Savunucular sayfası ekle
+defenders_enabled_tooltip: Harita düzenleyicide bir karakol seçin, panelin üstündeki Savunucular’a tıklayın, ardından türleri ve sayıyı seçin.
+defenders_walls: Karakol muhafızları yakındaki sur ve kulelere yerleşir
+defenders_walls_tooltip: Karakol savunucuları yakındaki sur ve kulelerde mevzilenebilir.
+defenders_knights: Şövalye muhafızlar devriyede saldırır
+defenders_knights_tooltip: Karakol şövalye muhafızları devriyeleri sırasında düşmanlarla çatışabilir.
+waves_group: Karakol dalga ayarları
+waves_group_descr: Bir karakolun her dalgasında kaç birlik bulunacağını belirler.
+waves_exact: Kesin dalga boyutu
+waves_exact_tooltip: Karakolun Saldıranlar sayfasında Boyut değerini dalga başına asker sayısına veya dalgaları durdurmak için 0’a ayarlayın.
+growth_group: Dalga büyümesi
+growth_group_descr: Oyun ilerledikçe bir karakolun dalgalarının ne kadar büyüyeceğini belirler.
+growth_enabled: Dalga büyümesi
+growth_enabled_tooltip: Karakolun Saldıranlar sayfasında sonraki dalgalara asker eklemek için Büyüme değerini, aynı boyutta tutmak için 0’ı seçin.
+jobs_group: Karakol dalgaları
+jobs_enabled: Karakol dalgalarına ayrı görevler ver
+jobs_enabled_tooltip: Birlikler karakol kontrolünde kaldıkları sürece rollerine göre gruplara ayrılır.
+siege_enabled: Karakol kuşatma araçları yolda ateş eder
+siege_enabled_tooltip: Karakol kuşatma araçları rotaları üzerindeki hedeflere ateş etmek için durabilir.
+retarget_enabled: Karakol dalgaları sıradaki rakibe saldırır
+retarget_enabled_tooltip: Rakipleri yenildiğinde hayatta kalan karakol birlikleri başka bir düşmana yönelir.
+join_enabled: Karakol dalgalarını yapay zekâ ordusuna kat
+join_enabled_tooltip: Bir yapay zekâ ordusuna katılan birlikler onun emirlerini izler ve karakol görevlerini bırakır.
+improvements: İyileştirmeler
+balance_changes: Denge değişiklikleri
+ai: Yapay zekâ
+waves_interval: Dalgalar arası sabit aralık
+waves_interval_tooltip: Karakolun Zamanlama sayfasında Aralık değerini sabit bir gecikmeye veya oyun zamanlaması için 0’a ayarlayın.
+qol: Kullanım kolaylığı
+map_editor: Harita düzenleyici
+cat_allies_outposts: Müttefikler ve karakollar
+cat_outpost_guards: Karakol muhafızları
+cat_outposts: Karakollar
